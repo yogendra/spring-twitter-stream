@@ -1,0 +1,13 @@
+---
+applications:
+  - name: twitter-stream
+    path: target/spring-twitter-stream-0.1.0.jar
+    random-route: true
+    buildpacks:
+    - java_buildpack_offline
+    stack: cflinuxfs3
+    memory: 1GB
+    disk: 256MB
+    services:
+      - twitter
+
