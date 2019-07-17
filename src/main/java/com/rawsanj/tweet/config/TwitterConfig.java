@@ -1,27 +1,32 @@
 package com.rawsanj.tweet.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import static org.slf4j.LoggerFactory.getLogger;
+
+import lombok.Data;
+import org.slf4j.Logger;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 
 @Configuration
+@ConfigurationProperties("vcap.services.twitter.credentials")
+@Data
 public class TwitterConfig {
+    private static final Logger logger = getLogger(TwitterConfig.class);
 
-    @Value("${spring.social.twitter.appId}")
     private String consumerKey;
-
-    @Value("${spring.social.twitter.appSecret}")
     private String consumerSecret;
-
-    @Value("${twitter.access.token}")
     private String accessToken;
-
-    @Value("${twitter.access.token.secret}")
     private String accessTokenSecret;
 
     @Bean
-    TwitterTemplate getTwtTemplate(){
+    TwitterTemplate twitterTemplate(){
+
+        logger.info("consumerKey:{}", consumerKey);
+        logger.info("consumerSecret:{}", consumerSecret);
+        logger.info("accessToken:{}", accessToken);
+        logger.info("accessTokenSecret:{}", accessTokenSecret);
         return new TwitterTemplate(consumerKey, consumerSecret, accessToken, accessTokenSecret);
     }
 
